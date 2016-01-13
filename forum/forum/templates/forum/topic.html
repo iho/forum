@@ -1,0 +1,18 @@
+{% extends "forum/base.html" %}
+{% block body %}
+<h1>
+{{ topic.name }}
+</h1>
+<div class="conatainer">
+{{ topic.body_html|safe }}
+</div>
+
+
+{% for comment in comments_tree %}
+{% with count=counter.new %}
+    {% include "forum/includes/comment.html"  %}
+{% endwith %}
+{% empty %}
+Ще немає коментарів    
+{% endfor %}
+{% endblock %}

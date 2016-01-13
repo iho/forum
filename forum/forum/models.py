@@ -49,10 +49,10 @@ class Forum(models.Model):
 
 
 class Topic(models.Model):
+    name = models.CharField(_('Name'), max_length=255)
     slug = models.CharField(_('Slug'), max_length=245, blank=True, null=True)
     forum = models.ForeignKey(
         Forum, related_name='topics', verbose_name=_('Forum'))
-    name = models.CharField(_('Subject'), max_length=255)
     created = models.DateTimeField(_('Created'), auto_now_add=True)
     updated = models.DateTimeField(_('Updated'), null=True, blank=True)
     deleted = models.DateTimeField(_('Deleted'), null=True, blank=True)

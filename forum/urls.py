@@ -14,11 +14,19 @@ Including another URLconf
     2. Import the include() function: from django.conf.urls import url, include
     3. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
+
 from django.contrib import admin
-from forum.views import topic
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^topic/(?P<id>\d+)/$', topic, name='topic_id'),
-    url(r'^topic/(?P<slug>[^/]+)/$', topic, name='topic_slug'),
+    url(r'', include('forum.urls', namespace='django')),
 ]
+
+from django.conf.urls.static import static
+from django.conf import settings
+if settings.DEBUG:
+    from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
+    urlpatterns += staticfiles_urlpatterns()
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

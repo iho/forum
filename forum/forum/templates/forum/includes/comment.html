@@ -1,0 +1,13 @@
+{% load static from staticfiles %}
+
+{% if comment.children %}
+   {% include "forum/includes/comment_render.html"  %}
+   
+   {% for comment in comment.children %}
+   {% with count=count.incr %}
+       {% include "forum/includes/comment.html"  %}    
+   {% endwith %}
+   {% endfor %}
+   {% else %}
+   {% include "forum/includes/comment_render.html"  %}
+{% endif %}

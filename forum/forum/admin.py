@@ -1,17 +1,24 @@
 from adminsortable2.admin import SortableAdminMixin
+from adminsortable2.admin import SortableInlineAdminMixin
+
 from django.conf import settings
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
-from forum.models import *
+from .models import *
 
-
+class ForumInline(SortableInlineAdminMixin, admin.TabularInline):  # or admin.StackedInline
+    model = Forum
+    fields = ['name','slug', 'position' ]
+    extra = 1
 class CategoryAdmin(SortableAdminMixin,  admin.ModelAdmin):
     list_display = ['name', 'position']
 
+    inlines = (ForumInline,)
 
-class ForumAdmin(SortableAdminMixin, admin.ModelAdmin):
-    list_display = ['name', 'category', 'position', 'topic_count']
+
+class ForumAdmin(admin.ModelAdmin):
+    list_display = ['name', 'category',  'topic_count']
     raw_id_fields = ['moderators', 'last_post']
 
 
