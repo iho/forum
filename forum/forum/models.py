@@ -4,6 +4,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
+from django.core.urlresolvers import reverse
 
 class User(AbstractUser):
     avatar = models.ImageField(upload_to='avatars',
@@ -39,6 +40,12 @@ class Forum(models.Model):
     last_post = models.ForeignKey(
         'Comment', related_name='+', blank=True, null=True)
 
+    def get_absolute_url(self):
+        return reverse('forum:forum', kwargs={'id':str(self.id)})
+
+
+
+
     class Meta:
         ordering = ['position']
         # verbose_name = _('Forum')
@@ -48,7 +55,18 @@ class Forum(models.Model):
         return self.name
 
 
-class Topic(models.Model):
+import markdown2
+markdowner=markdown2.Markdown( extras=["fenced-code-blocks"] )
+class MarkdownMixin(models.Model):
+    body_md = models.TextField(_('Message'))
+    body_html = models.TextField(_('HTML version'))
+    def save(self):
+        self.body_html = markdowner.convert( self.body_md ) 
+        super().save()
+    class Meta:
+        abstract = True
+
+class Topic(MarkdownMixin, models.Model):
     name = models.CharField(_('Name'), max_length=255)
     slug = models.CharField(_('Slug'), max_length=245, blank=True, null=True)
     forum = models.ForeignKey(
@@ -65,19 +83,20 @@ class Topic(models.Model):
     post_count = models.IntegerField(_('Post count'), blank=True, default=0)
     last_post = models.ForeignKey(
         'Comment', related_name='+', blank=True, null=True)
-    body_md = models.TextField(_('Message'))
-    body_html = models.TextField(_('HTML version'))
     user_ip = models.GenericIPAddressField(_('User IP'), blank=True, null=True)
-
+    
     class Meta:
         ordering = ['-updated']
         get_latest_by = 'updated'
+
+    def get_absolute_url(self):
+        return reverse('forum:topic_id', kwargs={'id':str(self.id)})
 
     def __str__(self):
         return self.name
 
 
-class Comment(models.Model):
+class Comment(MarkdownMixin, models.Model):
     slug = models.CharField(_('Slug'), max_length=245, blank=True, null=True)
     topic = models.ForeignKey(
         Topic, related_name='comments', verbose_name=_('Topic'))
@@ -87,8 +106,6 @@ class Comment(models.Model):
     updated = models.DateTimeField(_('Updated'), blank=True, null=True)
     deleted = models.DateTimeField(_('Deleted'), null=True, blank=True)
     # updated_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('Updated by'), blank=True, null=True)
-    body_md = models.TextField(_('Message'))
-    body_html = models.TextField(_('HTML version'))
     user_ip = models.GenericIPAddressField(_('User IP'), blank=True, null=True)
     likes = ArrayField(models.IntegerField(),  blank=True)
 

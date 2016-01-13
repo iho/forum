@@ -6,6 +6,7 @@ from django.views.decorators.cache import never_cache
 
 from .models import *
 
+from django.core.urlresolvers import reverse
 
 # cursor = connection.cursor()
 
@@ -68,6 +69,15 @@ def index(request):
     #context['categories'] = Category.objects.order_by('position').select_related('forums')
     return render(request, "forum/index.html", context)
 
+def forum(request, id):
+    context = {}
+    forum = get_object_or_404(Forum, id=id)
+    context['forum'] = forum
+    context['title'] = forum.name
+    #context['categories'] = Category.objects.order_by('position').select_related('forums')
+    return render(request, "forum/forum.html", context)
+
+
 def topic(request, id=None, slug=None):
     context = {}
     query = Topic.objects.filter(deleted=None)
@@ -85,4 +95,28 @@ def topic(request, id=None, slug=None):
     context['comments'] = comments
     context['comments_tree'] = to_tree(comments)
     return render(request, "forum/topic.html", context)
+
+from .forms import TopicForm 
+
+from django.utils.translation import ugettext_lazy as _
+
+from django.shortcuts import redirect
+from django.contrib import messages
+def create_topic(request):
+    context = {}
+
+    form = TopicForm()
+    if request.method == 'POST':
+        form = TopicForm(request.POST)
+        if form.is_valid():
+            topic = form.save(commit=False)
+            topic.user = request.user 
+            topic.save()
+            messages.success(request, _('New topic created'))
+            return redirect(topic)
+    context['form'] = form
+    context['title'] = _('New topic')
+
+    return render(request, "forum/form.html", context)
+
 

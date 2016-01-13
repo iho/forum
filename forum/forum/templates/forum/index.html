@@ -6,8 +6,7 @@
 {% for category in categories %}
     {{ category.name }} 
     {% for forum in category.forums.all %}
-        {{ forum.name }}
-    {% endfor %}
+    <a href="{{ forum.get_absolute_url }}"> {{ forum.name }} </a> {% endfor %}
 {% endfor %}
 
 {% endblock %}

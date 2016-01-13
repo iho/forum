@@ -20,7 +20,7 @@ class TopicForm(ModelForm):
 
     class Meta:
         model = Topic
-        fields = ['name', 'body_md']
+        fields = ['name', 'forum', 'body_md']
 
 class CommentForm(ModelForm):
     class Meta:

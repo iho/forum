@@ -19,7 +19,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'', include('forum.urls', namespace='django')),
+    url(r'', include('forum.urls', namespace='forum')),
 ]
 
 from django.conf.urls.static import static

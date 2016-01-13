@@ -1,0 +1,45 @@
+{% extends "forum/base.html" %}
+{% load bootstrap3 %}
+{% block body %}
+{% bootstrap_messages %}
+<h1>
+{{ forum.name }}
+</h1>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Answers</th>
+                <th>Views</th>
+            </tr>
+        </thead>
+        <tbody>
+
+{% for topic in forum.topics.all %}
+            <tr>
+                <th scope="row">1</th>
+                <td> <a href="{{ topic.get_absolute_url }}"> {{ topic.name }} </a> </td>
+                <td>Table cell</td>
+                <td>Table cell</td>
+            </tr>
+
+{% endfor %}
+            <tr>
+                <th scope="row">2</th>
+                <td>Table cell</td>
+                <td>Table cell</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>Table cell</td>
+                <td>Table cell</td>
+                <td>Table cell</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</h1>
+{% endblock %}

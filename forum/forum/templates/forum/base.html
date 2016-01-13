@@ -1,3 +1,4 @@
+{% load static from staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,6 +30,16 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="{% static 'css/bootstrap-markdown.min.css' %}">
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js"></script>
+<script src="{% static 'js/bootstrap-markdown.min.js' %}"></script>
+<script src="{% static 'js/simplemde.min.js' %}"></script>
+
+<link rel="stylesheet" href="{% static 'css/simplemde.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/pygments.css' %}">
+
 {% block extra_js %}
 {% endblock %}
 {% block extra_css %}
