@@ -5,6 +5,7 @@ defmodule Sample.Application do
   def route(<<"/ws/app/", p::binary>>),  do: route(p)
   def route(<<"index", _::binary>>), do: Sample.Index
   def route(<<"login", _::binary>>), do: Sample.Login
+  def route(<<"signup", _::binary>>), do: Sample.Signup
 
   def finish(state, ctx), do: {:ok, state, ctx}
   def init(state, context) do

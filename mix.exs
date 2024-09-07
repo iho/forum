@@ -39,7 +39,8 @@ defmodule Sample.Mixfile do
       {:nitro, "~> 8.2.4"},
       {:kvs, "~> 10.8.3"},
       {:n2o, "~> 10.12.4"},
-      {:syn, "~> 2.1.1"}
+      {:syn, "~> 2.1.1"},
+      {:argon2_elixir, "4.0.0"}
     ]
   end
 end
