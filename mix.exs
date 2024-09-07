@@ -41,6 +41,7 @@ defmodule Sample.Mixfile do
       {:n2o, "~> 10.12.4"},
       {:syn, "~> 2.1.1"},
       {:argon2_elixir, "4.0.0"},
+      {:exsync, "~> 0.4", only: :dev},
       {:resend, "~> 0.4.0"}
     ]
   end

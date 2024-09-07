@@ -1,16 +1,29 @@
 defmodule Sample.Login do
-  require NITRO ; require Logger
+  require NITRO
+  require Logger
+
   def event(:init) do
-      login_button = NITRO.button(id: :loginButton, body: "HELO", postback: :login, source: [:user, :room])
-      :nitro.update(:loginButton, login_button)
+    login_button =
+      NITRO.button(
+        id: :login_button,
+        class: "btn btn-primary",
+        body: "Login",
+        postback: :login,
+        source: [:email, :password]
+      )
+
+    :nitro.update(:login_button, login_button)
   end
+
   def event(:login) do
-      user = :nitro.to_list(:nitro.q(:user))
-      room = :nitro.to_binary(:nitro.q(:room))
-      :n2o.user(user)
-      :n2o.session(:room, room)
-      :nitro.wire("ws.close();")
-      :nitro.redirect(["/app/index.htm?room=", room])
+    email = :nitro.to_list(:nitro.q(:email))
+    password = :nitro.to_binary(:nitro.q(:password))
+    IO.inspect({email, password})
+    :n2o.user(email)
+    :n2o.session(:email, email)
+    :nitro.wire("ws.close();")
+    :nitro.redirect(["/app/index.html"])
   end
+
   def event(unexpected), do: unexpected |> inspect() |> Logger.warning()
 end
