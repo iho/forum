@@ -40,7 +40,8 @@ defmodule Sample.Mixfile do
       {:kvs, "~> 10.8.3"},
       {:n2o, "~> 10.12.4"},
       {:syn, "~> 2.1.1"},
-      {:argon2_elixir, "4.0.0"}
+      {:argon2_elixir, "4.0.0"},
+      {:resend, "~> 0.4.0"}
     ]
   end
 end

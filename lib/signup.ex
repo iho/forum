@@ -10,6 +10,14 @@ defmodule Sample.Signup do
       password = :nitro.to_binary(:nitro.q(:password))
       hash = Argon2.hash_pwd_salt(password)
       IO.inspect({username, email, hash})
+      client = Resend.client(api_key: System.get_env("RESEND_API_KEY"))
+
+      Resend.Emails.send(client, %{
+        from: "onboarding@forum.dev",
+        to: email,
+        subject: "Hello World",
+        html: "<p>Congrats on sending your <strong>first email</strong>!</p>"
+      })
       :n2o.user(username)
       :n2o.session(:email, email)
       :nitro.wire("ws.close();")
