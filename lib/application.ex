@@ -7,7 +7,7 @@ defmodule Forum.Application do
   def route(<<"login", _::binary>>), do: Forum.Login
   def route(<<"signup", _::binary>>), do: Forum.Signup
 
-  def finish(state, ctx), do: {:ok, state, ctx}
+  def finish(state , ctx), do: {:ok, state, ctx}
   def init(state, context) do
       %{path: path} = N2O.cx(context, :req)
       {:ok, state, N2O.cx(context, path: path, module: route(path))}
