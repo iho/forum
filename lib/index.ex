@@ -1,4 +1,4 @@
-defmodule Sample.Index do
+defmodule Forum.Index do
   require NITRO ; require KVS ; require N2O ; require Logger
 
   def room() do
@@ -10,7 +10,7 @@ defmodule Sample.Index do
   end
 
   def event(:init) do
-    room = Sample.Index.room
+    room = Forum.Index.room
     :kvs.ensure(KVS.writer(id: room)) ; :n2o.reg({:topic, room})
     :nitro.update(:upload, NITRO.upload())
     :nitro.update(:heading, NITRO.h2(id: :heading, body: room))
@@ -34,7 +34,7 @@ defmodule Sample.Index do
   def event(unexpected), do: unexpected |> inspect() |> Logger.warning()
 
   def chat(message) do
-    room = Sample.Index.room ; user = :n2o.user()
+    room = Forum.Index.room ; user = :n2o.user()
     room |> :kvs.writer() |> KVS.writer(args: {:msg, :kvs.seq([], []), user, message})
     |> :kvs.add() |> :kvs.save()
     :n2o.send({:topic, room}, N2O.client(data: {user, message}))

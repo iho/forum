@@ -1,11 +1,11 @@
-defmodule Sample.Mixfile do
+defmodule Forum.Mixfile do
   use Mix.Project
 
   def project() do
     [
-      app: :sample,
+      app: :Forum,
       version: "6.9.3",
-      description: "SAMPLE Elixir N2O Application",
+      description: "Forum Elixir N2O Application",
       package: package(),
       deps: deps()
     ]
@@ -16,15 +16,15 @@ defmodule Sample.Mixfile do
       files: ~w(doc lib mix.exs LICENSE),
       licenses: ["ISC"],
       maintainers: ["Namdak Tonpa"],
-      name: :sample,
-      links: %{"GitHub" => "https://github.com/erpuno/sample"}
+      name: :Forum,
+      links: %{"GitHub" => "https://github.com/erpuno/Forum"}
     ]
   end
 
 
   def application() do
     [
-      mod: {Sample.Application, []},
+      mod: {Forum.Application, []},
       extra_applications: [:xmerl, :logger]
     ]
   end

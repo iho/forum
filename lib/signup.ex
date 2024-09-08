@@ -1,4 +1,4 @@
-defmodule Sample.Signup do
+defmodule Forum.Signup do
   require NITRO
   require Logger
 
