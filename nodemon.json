@@ -1,0 +1,6 @@
+{
+  "watch": ["lib", "config", "priv", "include"],
+  "ext": "ex,exs,erl,hrl,htm,html,css,js",
+  "exec": "mix run --no-halt",
+  "delay": 1000
+}

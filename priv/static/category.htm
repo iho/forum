@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Category - Forum</title>
+    <style>
+        body {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #f5f5f5;
+        }
+        header {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        header h1 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+        #categoryDescription {
+            color: #666;
+            margin: 10px 0;
+        }
+        #threadCount {
+            color: #999;
+            font-size: 14px;
+        }
+        .back-link {
+            color: #007bff;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .section {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .thread_item {
+            padding: 20px;
+            border-left: 3px solid #007bff;
+            margin-bottom: 15px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .thread_item:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transform: translateX(5px);
+        }
+        .thread_item h4 {
+            margin: 0 0 8px 0;
+        }
+        .thread_item a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .thread_item a:hover {
+            text-decoration: underline;
+        }
+        .thread_item span {
+            color: #666;
+            font-size: 14px;
+        }
+        #pagination {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .page_btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .page_btn.active {
+            background: #0056b3;
+            font-weight: bold;
+        }
+        .page_btn:hover {
+            background: #0056b3;
+        }
+    </style>
+    <script>
+        // Get category ID from URL BEFORE loading N2O
+        var qs = (function (a) {
+            if (a == "") return {};
+            var b = {};
+            for (var i = 0; i < a.length; ++i) {
+                var p = a[i].split('=', 2);
+                if (p.length == 1)
+                    b[p[0]] = "";
+                else
+                    b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+            }
+            return b;
+        })(window.location.search.substr(1).split('&'));
+
+        var categoryId = qs["id"];
+        
+        // Set N2O connection parameters
+        host = location.hostname;
+        port = 8002;
+        debug = true;
+        persistent = true;
+        
+        // Override N2O's default path to include category ID in WebSocket path
+        if (categoryId) {
+            transition = {room: 'category/' + categoryId, pid: '', sid: ''};
+        }
+    </script>
+    <script src="https://ws.n2o.dev/priv/utf8.js"></script>
+    <script src="https://ws.n2o.dev/priv/bert.js"></script>
+    <script src="https://ws.n2o.dev/priv/heart.js"></script>
+    <script src="https://ws.n2o.dev/priv/ieee754.js"></script>
+    <script src="https://ws.n2o.dev/priv/n2o.js"></script>
+    <script src="https://ws.n2o.dev/priv/ftp.js"></script>
+    <script src="https://nitro.n2o.dev/priv/js/nitro.js"></script>
+</head>
+
+<body>
+    <header>
+        <a href="/app/categories.htm" class="back-link">← Back to Categories</a>
+        <h1 id="categoryTitle">Loading...</h1>
+        <p id="categoryDescription"></p>
+        <span id="threadCount"></span>
+    </header>
+
+    <div class="section">
+        <h2>Threads</h2>
+        <div id="threadsList"></div>
+        <div id="pagination"></div>
+    </div>
+
+    <!-- Hidden elements: category ID input + init button (auto-clicked after N2O connects) -->
+    <input type="hidden" id="__category_id__" />
+    <button id="__init_btn__" style="display:none;"></button>
+    
+    <script>
+        // Set category ID before N2O starts
+        if (categoryId) qi('__category_id__').value = categoryId;
+        
+        $io.do = function (r) { console.log(r); };
+        protos = [$bert];
+        N2O_start();
+        
+        // Auto-trigger load after N2O connects (button is wired by server during init)
+        setTimeout(() => { var btn = qi('__init_btn__'); if (btn && btn.click) btn.click(); }, 100);
+    </script>
+</body>
+</html>

@@ -1,32 +1,44 @@
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Chat</title>
-    <link href="https://sample.n2o.dev/priv/static/synrc.css" type="text/css" rel="stylesheet" />
+    <meta http-equiv="refresh" content="0;url=/app/categories.htm" />
+    <title>Forum - Redirecting...</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: #f5f5f5;
+        }
+        .redirect-message {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .redirect-message h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .redirect-message a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .redirect-message a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
-<body class="chat">
-<header>
-    <a href="/app/login.htm"><img src="https://n2o.dev/img/synrc.svg" /></a>
-    <h2 id="heading">room</h2>
-    <button id="logout">logout</button>
-</header>
-    <main>
-        <form>
-            <textarea id="message" rows="4" autofocus="true" placeholder="Just type what you think about this"></textarea>
-            <button id="upload">Browse</button>
-            <button id="send">chat</button>
-        </form>
-        <history id="history"></history>
-    </main>
-    <script src="https://ws.n2o.dev/priv/utf8.js"></script>
-    <script src="https://ws.n2o.dev/priv/bert.js"></script>
-    <script src="https://ws.n2o.dev/priv/heart.js"></script>
-    <script src="https://ws.n2o.dev/priv/ieee754.js"></script>
-    <script src="https://ws.n2o.dev/priv/n2o.js"></script>
-    <script src="https://ws.n2o.dev/priv/ftp.js"></script>
-    <script src="https://nitro.n2o.dev/priv/js/nitro.js"></script>
-    <script>host = location.hostname; port = 8002; debug = true; persistent = true;</script>
-    <script>$io.do = function(r) { console.log(r); };</script>
-    <script>protos = [$bert]; N2O_start();</script>
+<body>
+    <div class="redirect-message">
+        <h1>Redirecting to Forum...</h1>
+        <p>If you are not redirected automatically, <a href="/app/categories.htm">click here</a>.</p>
+    </div>
 </body>
 </html>

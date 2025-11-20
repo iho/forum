@@ -1,11 +1,11 @@
-defmodule Sample.Mixfile do
+defmodule Forum.Mixfile do
   use Mix.Project
 
   def project() do
     [
-      app: :sample,
-      version: "6.9.4",
-      description: "SAMPLE Elixir N2O Application",
+      app: :forum,
+      version: "0.1.0",
+      description: "Forum Elixir N2O Application",
       package: package(),
       deps: deps()
     ]
@@ -15,16 +15,16 @@ defmodule Sample.Mixfile do
     [
       files: ~w(doc lib mix.exs LICENSE),
       licenses: ["ISC"],
-      maintainers: ["Namdak Tonpa"],
-      name: :sample,
-      links: %{"GitHub" => "https://github.com/erpuno/sample"}
+      maintainers: ["Ihor Horobets"],
+      name: :forum,
+      links: %{"GitHub" => "https://github.com/iho/forum"}
     ]
   end
 
 
   def application() do
     [
-      mod: {Sample.Application, []},
+      mod: {Forum.Application, []},
       extra_applications: [:xmerl, :logger]
     ]
   end
@@ -35,11 +35,13 @@ defmodule Sample.Mixfile do
       {:plug, "~> 1.15.3"},
       {:bandit, "~> 1.0"},
       {:websock_adapter, "~> 0.5"},
-      {:rocksdb, "~> 1.8.0"},
+      {:rocksdb, git: "git@github.com:emqx/erlang-rocksdb.git"},
       {:nitro, "~> 8.2.4"},
       {:kvs, "~> 10.8.3"},
       {:n2o, "~> 10.12.4"},
-      {:syn, "~> 2.1.1"}
+      {:syn, "~> 2.1.1"},
+      {:earmark, "~> 1.4"},
+      {:html_sanitize_ex, "~> 1.4"}
     ]
   end
 end

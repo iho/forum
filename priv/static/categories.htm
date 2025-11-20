@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Forum - Categories</title>
+    <style>
+        body {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #f5f5f5;
+        }
+        header {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header .logo-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        header img {
+            width: 50px;
+            height: 50px;
+        }
+        header h1 {
+            margin: 0;
+            color: #333;
+        }
+        nav a {
+            margin: 0 15px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .section {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .category_item {
+            padding: 20px;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            transition: all 0.2s;
+        }
+        .category_item:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transform: translateX(5px);
+        }
+        .category_item h3 {
+            margin: 0 0 10px 0;
+        }
+        .category_item a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 20px;
+        }
+        .category_item p {
+            margin: 0;
+            color: #666;
+        }
+        .thread_count {
+            color: #999;
+            font-size: 14px;
+        }
+        .thread_item {
+            padding: 15px;
+            border-left: 3px solid #007bff;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+        }
+        .thread_item h4 {
+            margin: 0 0 5px 0;
+        }
+        .thread_item a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .thread_item span {
+            color: #666;
+            font-size: 14px;
+        }
+        #pagination {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .page_btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .page_btn.active {
+            background: #0056b3;
+            font-weight: bold;
+        }
+        .page_btn:hover {
+            background: #0056b3;
+        }
+        #createThreadBtn:hover {
+            background: #218838 !important;
+        }
+        select {
+            font-size: 16px;
+        }
+        input, textarea, select {
+            font-family: inherit;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo-title">
+            <img src="https://n2o.dev/img/synrc.svg" alt="Forum Logo" />
+            <h1>Forum Categories</h1>
+        </div>
+        <nav>
+            <span id="userDisplay"></span>
+            <span id="authLinks">
+                <a href="/app/login.htm">Login</a>
+                <a href="/app/register.htm">Register</a>
+            </span>
+            <button id="logoutBtn" style="display:none; background: #dc3545; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">Logout</button>
+        </nav>
+    </header>
+
+    <div class="section" id="createThreadSection" style="display:none;">
+        <h2>Create New Thread</h2>
+        <form>
+            <div style="margin-bottom: 15px;">
+                <label for="threadTitle" style="display: block; margin-bottom: 5px; font-weight: 500;">Title</label>
+                <input type="text" id="threadTitle" placeholder="Thread title" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;" />
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label for="threadCategory" style="display: block; margin-bottom: 5px; font-weight: 500;">Category</label>
+                <select id="threadCategory" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                    <option value="">Select a category</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label for="threadContent" style="display: block; margin-bottom: 5px; font-weight: 500;">Content</label>
+                <textarea id="threadContent" placeholder="What's on your mind? (Markdown supported)" style="width: 100%; min-height: 150px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; resize: vertical; box-sizing: border-box;"></textarea>
+                <small style="color: #666; margin-top: 4px; display: block;">Markdown formatting is supported: **bold**, *italic*, `code`, [links](url), etc.</small>
+            </div>
+
+            <button type="button" id="createThreadBtn" style="background: #28a745; color: white; border: none; padding: 12px 24px; border-radius: 4px; cursor: pointer; font-size: 16px;">Create Thread</button>
+        </form>
+    </div>
+
+    <div class="section">
+        <h2>Categories</h2>
+        <div id="categoriesList"></div>
+    </div>
+
+    <div class="section">
+        <h2>Recent Threads</h2>
+        <div id="recentThreads"></div>
+        <div id="pagination"></div>
+    </div>
+
+    <script src="https://ws.n2o.dev/priv/utf8.js"></script>
+    <script src="https://ws.n2o.dev/priv/bert.js"></script>
+    <script src="https://ws.n2o.dev/priv/heart.js"></script>
+    <script src="https://ws.n2o.dev/priv/ieee754.js"></script>
+    <script src="https://ws.n2o.dev/priv/n2o.js"></script>
+    <script src="https://ws.n2o.dev/priv/ftp.js"></script>
+    <script src="https://nitro.n2o.dev/priv/js/nitro.js"></script>
+    <script>
+        host = location.hostname;
+        port = 8002;
+        debug = true;
+        persistent = true;
+        $io.do = function (r) { console.log(r); };
+        protos = [$bert];
+        N2O_start();
+    </script>
+</body>
+</html>

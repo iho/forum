@@ -1,11 +1,11 @@
-defmodule Sample.WS do
+defmodule Forum.WS do
   require N2O
   use Plug.Router
   plug :match
   plug :dispatch
 
-  get "/ws/app/:mod", do: conn |> WebSockAdapter.upgrade(Sample.WS, [module: extract(mod)], timeout: 60_000) |> halt()
-  def extract(route), do: :application.get_env(:n2o, :router, Sample.Application).route(route)
+  get "/ws/app/:mod", do: conn |> WebSockAdapter.upgrade(Forum.WS, [module: extract(mod)], timeout: 60_000) |> halt()
+  def extract(route), do: :application.get_env(:n2o, :router, Forum.Application).route(route)
 
   def init(args), do: {:ok, N2O.cx(module: Keyword.get(args, :module)) }
   def handle_in({"N2O," <> _ = message, _}, state), do: response(:n2o_proto.stream({:text,message},[],state))
